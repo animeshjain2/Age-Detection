@@ -22,7 +22,7 @@ Person's Age detection in real time as well as through video file using Convolut
 * Clone this repo and go to the folder path in terminal.
 * Run the below to implement Age Detection:
     * In real time
-           *python detect_age_cam.py*    
+           *python detect_age_cam.py*  \  
      * In pre-captured video:
            *python detect_age_file.py*
        
