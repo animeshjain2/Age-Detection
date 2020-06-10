@@ -7,8 +7,8 @@ Person's Age detection in real time using Convolutional neural networks and Caff
 -Python 3.8.3
 
 ## Python Libraries Used:
-opencv-python
-numpy
+opencv-python\
+numpy\
 imutils 
 argparse
 
