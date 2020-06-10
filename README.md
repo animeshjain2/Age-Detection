@@ -19,12 +19,14 @@ Person's Age detection in real time as well as through video file using Convolut
 
 ## Implementation:
 
+<pre>
 * Clone this repo and go to the folder path in terminal.
 * Run the below to implement Age Detection:
         a) In real time
             *python detect_age_cam.py*    
         b) In pre-captured video:\
-       *python detect_age_file.py*
+       *python detect_age_file.py</pre>
+       
 
 * Result shows the person's face detection and age bracket with percentage accuracy in which it falls.
 
