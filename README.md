@@ -14,7 +14,7 @@ Python 3.8.3
 opencv-python\
 numpy\
 imutils \
-argparse\
+argparse
 
 ## Implementation:
 
@@ -22,5 +22,6 @@ Clone this repo and go to the folder pat and run command below.
 
 *python detect_age_cam.py*
 
-Result shows the person's face detection and age bracket with percentage accuracy in which it falls.
+
+-Result shows the person's face detection and age bracket with percentage accuracy in which it falls.
 
