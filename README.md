@@ -7,13 +7,13 @@ Person's Age detection in real time using Convolutional neural networks and Caff
 * Firstly, faces are detected in the frame using the caffe model res10_300x300_ssd_iter_140000.caffemodel.
 * Secondly, age of every person is predicted also using caffe models age_net.
 ## Platform:
-* Ubuntu 16.04\
+* Ubuntu 16.04
 * Python 3.8.3
 
 ## Python Libraries Used:
-* opencv-python\
-* numpy\
-* imutils \
+* opencv-python
+* numpy
+* imutils 
 * argparse
 
 ## Implementation:
