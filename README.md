@@ -27,5 +27,5 @@ Person's Age detection in real time as well as through video file using Convolut
            *python detect_age_file.py*
        
 
-* Result shows the person's face detection and age bracket with percentage accuracy in which it falls.
+* Result shows the person's face detection and age bracket with percentage accuracy in which it lies.
 
