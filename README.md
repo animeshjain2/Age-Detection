@@ -6,7 +6,7 @@ Person's Age and Gender detection in real time as well as through video file usi
 
 * Firstly, faces are detected in the frame using the caffe model res10_300x300_ssd_iter_140000.caffemodel.
 * Secondly, age of every person is predicted also using caffe models age_net.
-* Then gender of every is predicted using caffe model gender_net.
+* Then, gender of every person is predicted using caffe model gender_net.
 
 ## Platform:
 * Ubuntu 16.04
