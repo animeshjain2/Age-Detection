@@ -1,11 +1,12 @@
 # Age-Detection
 
-Person's Age detection in real time as well as through video file using Convolutional neural networks and Caffe Framework is used in this pre-trained model.
+Person's Age and Gender detection in real time as well as through video file using Convolutional neural networks and Caffe Framework is used in this pre-trained model.
 
 ## Method:
 
 * Firstly, faces are detected in the frame using the caffe model res10_300x300_ssd_iter_140000.caffemodel.
 * Secondly, age of every person is predicted also using caffe models age_net.
+* Then gender of every is predicted using caffe model gender_net.
 
 ## Platform:
 * Ubuntu 16.04
@@ -27,5 +28,5 @@ Person's Age detection in real time as well as through video file using Convolut
            *python detect_age_file.py*
        
 
-* Result shows the person's face detection and age bracket with percentage accuracy in which it lies.
+* Result shows the person's face detection and age bracket with percentage accuracy in which it lies and the gender of a person.
 
