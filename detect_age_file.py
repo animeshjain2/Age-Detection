@@ -64,13 +64,24 @@ def detect_and_predict_age(frame, faceNet, ageNet, minConf=0.5):
 			age = AGE_BUCKETS[i]
 			ageConfidence = preds[0][i]
 
+			#Gender Prediction
+			
+			genderNet = cv2.dnn.readNet( "deploy_gender.prototxt", "gender_net.caffemodel") 
+			genderList = ['Male', 'Female']
 
+			blob = cv2.dnn.blobFromImage(face, 1.0, (227, 227), (78.4263377603, 87.7689143744, 114.895847746), swapRB=False)
+			genderNet.setInput(blob)
+			genderPreds = genderNet.forward()
+			j = genderPreds[0].argmax()
+			gender = genderList[j]
+			genderConfidence = genderPreds[0][j]
+			
 			# construct a dictionary consisting of both the face
 			# bounding box location along with the age prediction,
 			# then update our results list
 			d = {
 				"loc": (startX, startY, endX, endY),
-				"age": (age, ageConfidence)
+				"age": (age, ageConfidence,gender,genderConfidence)
 			}
 			results.append(d)
 
@@ -106,7 +117,7 @@ ageNet = cv2.dnn.readNet("age_deploy.prototxt","age_net.caffemodel")
 
 # initialize the video stream and allow the camera sensor to warm up
 print("[INFO] starting video stream...")
-vs = cv2.VideoCapture('abc.mp4')
+vs = cv2.VideoCapture('test.mp4')
 time.sleep(2.0)
 
 # loop over the frames from the video stream
@@ -130,11 +141,12 @@ while (vs.isOpened()):
 		# draw the bounding box of the face along with the associated
 		# predicted age
 		#text = "{}: {:.2f}%".format(r["age"][0], r["age"][1] * 100)
-		text="{}:{}:{:.2f}%".format("True",r["age"][0], r["age"][1] * 100) if r["age"][0]=="(15-20)" or r["age"][0]=="(25-32)" or r["age"][0]=="(38-43)" or r["age"][0]=="(48-53)" or r["age"][0]=="(60-100)" else "{}:{}:{:.2f}%".format("False", r["age"][0],r["age"][1] * 100)
+		text="{}:{}:{:.2f}%:{}:{:.2f}%".format("True",r["age"][0], r["age"][1] * 100, r["age"][2], r["age"][3]*100) if r["age"][0]=="(15-20)" or r["age"][0]=="(25-32)" or r["age"][0]=="(38-43)" or r["age"][0]=="(48-53)" or r["age"][0]=="(60-100)" else "{}:{}:{:.2f}%:{}:{:.2f}%".format("False", r["age"][0],r["age"][1] * 100, r["age"][2], r["age"][3]*100)
 		(startX, startY, endX, endY) = r["loc"]
 		y = startY - 10 if startY - 10 > 10 else startY + 10
 		cv2.rectangle(frame, (startX, startY), (endX, endY),
 			(0, 0, 255), 1)
+
 		cv2.putText(frame, text, (startX, y),
 			cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
 

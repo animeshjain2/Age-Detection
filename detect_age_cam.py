@@ -1,4 +1,3 @@
-
 # python detect_age_video.py --face face_detector --age age_detector
 
 # import the necessary packages
@@ -61,13 +60,29 @@ def detect_and_predict_age(frame, faceNet, ageNet, minConf=0.5):
 			i = preds[0].argmax()
 			age = AGE_BUCKETS[i]
 			ageConfidence = preds[0][i]
+			
+
+			#gender prediction
+			
+			genderNet = cv2.dnn.readNet( "deploy_gender.prototxt", "gender_net.caffemodel") 
+			genderList = ['Male', 'Female']
+
+			blob = cv2.dnn.blobFromImage(face, 1.0, (227, 227), (78.4263377603, 87.7689143744, 114.895847746), swapRB=False)
+			genderNet.setInput(blob)
+			genderPreds = genderNet.forward()
+			j = genderPreds[0].argmax()
+			gender = genderList[j]
+			genderConfidence = genderPreds[0][j]
+			
+			#print("Gender Output : {}".format(genderPreds))
+			#print("Gender : {}".format(gender))
 
 			# construct a dictionary consisting of both the face
 			# bounding box location along with the age prediction,
 			# then update our results list
 			d = {
 				"loc": (startX, startY, endX, endY),
-				"age": (age, ageConfidence)
+				"age": (age, ageConfidence,gender,genderConfidence)
 			}
 			results.append(d)
 
@@ -126,12 +141,15 @@ while True:
 		# draw the bounding box of the face along with the associated
 		# predicted age
 		#text = "{}: {:.2f}%".format(r["age"][0], r["age"][1] * 100)
-		text="{}:{}:{:.2f}%".format("True", r["age"][0],r["age"][1] * 100) if r["age"][0]=="(15-20)" or r["age"][0]=="(25-32)" or r["age"][0]=="(38-43)" or r["age"][0]=="(48-53)" or r["age"][0]=="(60-100)" else "{}:{}:{:.2f}%".format("False", r["age"][0], r["age"][1] * 100)
+		text="{}:{}:{:.2f}%:{}:{:.2f}%".format("True", r["age"][0],r["age"][1] * 100,r["age"][2], r["age"][3]*100) if r["age"][0]=="(15-20)" or r["age"][0]=="(25-32)" or r["age"][0]=="(38-43)" or r["age"][0]=="(48-53)" or r["age"][0]=="(60-100)" else "{}:{}:{:.2f}%:{}:{:.2f}%".format("False", r["age"][0], r["age"][1] * 100,r["age"][2],r["age"][3]*100)
 		(startX, startY, endX, endY) = r["loc"]
 		y = startY - 10 if startY - 10 > 10 else startY + 10
 		cv2.rectangle(frame, (startX, startY), (endX, endY),
 			(0, 0, 255), 2)
-		cv2.putText(frame, text, (startX, y),
+
+
+		x = startX-50 if startX-50>50 else startX+50
+		cv2.putText(frame, text, (x, y),
 			cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
 
 	# show the output frame
