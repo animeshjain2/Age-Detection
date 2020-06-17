@@ -115,6 +115,8 @@ weightsPath = os.path.sep.join(["age_detector", "age_net.caffemodel"])
 ageNet = cv2.dnn.readNet("age_deploy.prototxt","age_net.caffemodel")
 
 
+print("[INFO] loading gender detector model...")
+
 # initialize the video stream and allow the camera sensor to warm up
 print("[INFO] starting video stream...")
 vs = cv2.VideoCapture('test.mp4')
@@ -141,12 +143,13 @@ while (vs.isOpened()):
 		# draw the bounding box of the face along with the associated
 		# predicted age
 		#text = "{}: {:.2f}%".format(r["age"][0], r["age"][1] * 100)
-		text="{}:{}:{:.2f}%:{}".format("True",r["age"][0], r["age"][1] * 100, r["age"][2], r["age"][3]*100) if r["age"][0]=="(15-20)" or r["age"][0]=="(25-32)" or r["age"][0]=="(38-43)" or r["age"][0]=="(48-53)" or r["age"][0]=="(60-100)" else "{}:{}:{:.2f}%:{}".format("False", r["age"][0],r["age"][1] * 100, r["age"][2])
+		text="{}:{}:{:.2f}%:{}".format("True",r["age"][0], r["age"][1] * 100, r["age"][2]) if r["age"][0]=="(15-20)" or r["age"][0]=="(25-32)" or r["age"][0]=="(38-43)" or r["age"][0]=="(48-53)" or r["age"][0]=="(60-100)" else "{}:{}:{:.2f}%:{}".format("False", r["age"][0],r["age"][1] * 100, r["age"][2])
 		(startX, startY, endX, endY) = r["loc"]
 		y = startY - 10 if startY - 10 > 10 else startY + 10
 		cv2.rectangle(frame, (startX, startY), (endX, endY),
 			(0, 0, 255), 1)
 		x = startX-50 if startX-50>50 else startX+50
+
 		cv2.putText(frame, text, (x, y),
 			cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
 
