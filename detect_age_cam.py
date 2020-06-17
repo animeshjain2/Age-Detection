@@ -115,6 +115,7 @@ prototxtPath = os.path.sep.join(["age_detector", "age_deploy.prototxt"])
 weightsPath = os.path.sep.join(["age_detector", "age_net.caffemodel"])
 ageNet = cv2.dnn.readNet("age_deploy.prototxt","age_net.caffemodel")
 
+print("[INFO] loading gender detector model...")
 
 # initialize the video stream and allow the camera sensor to warm up
 print("[INFO] starting video stream...")
